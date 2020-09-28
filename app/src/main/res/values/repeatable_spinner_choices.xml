@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="repeat_choices">
+        <item>Every day</item>
+        <item>Every X days</item>
+        <item>X times each week</item>
+        <item>Weekly</item>
+        <item>Every X weeks</item>
+        <item>Monthly</item>
+        <item>X times each month</item>
+        <item>Every X months</item>
+        <item>X times each year</item>
+        <item>Yearly</item>
+
+    </string-array>
+</resources>
