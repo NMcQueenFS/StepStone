@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="repeat_choices">
+        <item>Never</item>
         <item>Every day</item>
         <item>Every X days</item>
         <item>X times each week</item>
