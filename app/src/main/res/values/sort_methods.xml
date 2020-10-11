@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_methods">
+        <item>Priority (Descending)</item>
+        <item>Priority (Ascending)</item>
+        <item>Due Date (Descending)</item>
+        <item>Due Date (Ascending)</item>
+        <item>Description (Descending)</item>
+        <item>Description (Ascending)</item>
+    </string-array>
+
+</resources>

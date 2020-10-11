@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/task_card_component"
+    android:id="@+id/task_card_completeUnit"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/task_completed_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="#FFFFFF"
@@ -25,19 +25,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/taskText"
+            android:id="@+id/task_description_textBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textColor="#185860"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
+            app:layout_constraintBottom_toBottomOf="@+id/task_completed_checkBox"
+            app:layout_constraintStart_toEndOf="@+id/task_completed_checkBox"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="example display" />
 
         <Switch
-            android:id="@+id/repeatable_switch"
+            android:id="@+id/task_repeatable_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -45,8 +45,8 @@
             android:text="Repeatable"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/taskText" />
+            app:layout_constraintStart_toEndOf="@+id/task_completed_checkBox"
+            app:layout_constraintTop_toBottomOf="@+id/task_description_textBox" />
 
         <Spinner
             android:id="@+id/repeat_spinner"
@@ -55,10 +55,28 @@
             android:background="#00FFFFFF"
             android:entries="@array/repeat_choices"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/repeatable_switch"
+            app:layout_constraintBottom_toBottomOf="@+id/task_repeatable_switch"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/repeatable_switch"
-            app:layout_constraintTop_toTopOf="@+id/repeatable_switch" />
+            app:layout_constraintStart_toEndOf="@+id/task_repeatable_switch"
+            app:layout_constraintTop_toTopOf="@+id/task_repeatable_switch" />
+
+        <TextView
+            android:id="@+id/task_priority_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="#FFFFFF"
+            android:paddingHorizontal="8sp"
+            android:paddingVertical="2sp"
+            android:shadowColor="@color/textShadowColor"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="0.25"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="TEST" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
