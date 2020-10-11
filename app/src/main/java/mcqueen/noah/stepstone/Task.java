@@ -7,7 +7,6 @@ public class Task {
     private String description, dueDate;
     private boolean completed, repeatable;
     private int priority;
-    enum priority {VERY_LOW,LOW,MEDIUM,HIGH,CRITICAL,OVERDUE}
 
     //Constructors
     public Task(){}

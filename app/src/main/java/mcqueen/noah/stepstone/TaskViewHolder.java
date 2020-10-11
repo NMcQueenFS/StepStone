@@ -2,7 +2,6 @@ package mcqueen.noah.stepstone;
 
 import android.graphics.Color;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,15 +9,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
-    private CardView taskCard;
-    private TextView taskText;
-    private TextView taskPriority;
+    final private TextView taskText;
+    final private TextView taskPriority;
 
     public TaskViewHolder(@NonNull View itemView) {
         super(itemView);
-        taskCard = (CardView)itemView.findViewById(R.id.task_card_completeUnit);
-        taskText = (TextView)taskCard.findViewById(R.id.task_description_textBox);
-        taskPriority = (TextView)taskCard.findViewById(R.id.task_priority_display);
+        CardView taskCard = itemView.findViewById(R.id.task_card_completeUnit);
+        taskText = taskCard.findViewById(R.id.task_description_textBox);
+        taskPriority = taskCard.findViewById(R.id.task_priority_display);
 
     }
 
@@ -55,7 +53,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
                 taskPriority.setBackgroundColor(Color.parseColor("#FF0000")); //Red
                 break;
             default:
-                taskPriority.setText("Borked!!!");
+                taskPriority.setText("Broken!");
                 taskPriority.setBackgroundColor(Color.parseColor("#FF6978")); //Pink
                 break;
         }

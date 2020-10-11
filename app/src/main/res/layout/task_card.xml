@@ -36,14 +36,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="example display" />
 
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/task_repeatable_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:text="Repeatable"
-            android:textSize="10sp"
+            android:text="@string/task_card_repeatability"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/task_completed_checkBox"
             app:layout_constraintTop_toBottomOf="@+id/task_description_textBox" />

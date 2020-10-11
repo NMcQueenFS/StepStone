@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter {
-    private List<Task> tasks = new ArrayList<>();
+    final private List<Task> tasks = new ArrayList<>();
 
     public TaskViewAdapter(final List<Task> tasks) {
         if (tasks != null) { this.tasks.addAll(tasks); }
@@ -25,9 +25,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
         return new TaskViewHolder(view);
     }
 
-    @NonNull
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         ((TaskViewHolder) holder).bindData(tasks.get(position));
     }
 
@@ -41,9 +40,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
         return R.layout.task_card;
     }
 
-    public List<Task> addTask(Task task) {
+    public void addTask(Task task) {
         tasks.add(task);
-        return tasks;
     }
 
     public void TaskSort(int type) {
@@ -53,7 +51,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
     @SuppressWarnings("SpellCheckingInspection")
     static class CustomComparator implements Comparator<Task> {
         static final int PRIORITYDOWN = 0, PRIORITYUP = 1, DUEDOWN = 2, DUEUP = 3, DESCDOWN = 4, DESCUP = 5;
-        int type;
+        final int type;
 
         public CustomComparator(int type) { this.type = type; }
 

@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements taskCard_creator.CreatorDialogListener{
 
@@ -25,15 +26,16 @@ public class MainActivity extends AppCompatActivity implements taskCard_creator.
 
         //Define and assemble the recycler view for tasks to be visible
         adapter = new TaskViewAdapter(generateTaskList());
-        RecyclerView taskRecycler = (RecyclerView)findViewById(R.id.taskList);
+        RecyclerView taskRecycler = findViewById(R.id.taskList);
         taskRecycler.setLayoutManager(new LinearLayoutManager(this));
         taskRecycler.setHasFixedSize(true);
         taskRecycler.setAdapter(adapter);
 
+        //Recognize elements of the main activity screen
+        Button button = findViewById(R.id.addTask_button);
+        Spinner sortSpinner = findViewById(R.id.sortSpinner);
 
-        Button button = (Button)findViewById(R.id.addTask_button);
-        Spinner sortSpinner = (Spinner)findViewById(R.id.sortSpinner);
-
+        //Logic for button click events
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements taskCard_creator.
             }
         });
 
+        //Logic for sorting spinner selection
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -64,9 +67,10 @@ public class MainActivity extends AppCompatActivity implements taskCard_creator.
     private List<Task> generateTaskList() {
         List<Task> taskList = new ArrayList<>();
 
+        //TODO: Remove this block of code, implemented for testing
         for (int i = 0; i < 99; i++) {
-            int random = (int)(Math.random()*(7-0)+0);
-            taskList.add(new Task(String.format("My priority is: %d", random),null));
+            int random = (int)(Math.random()*7);
+            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", random),null));
             taskList.get(i).setPriority(random);
         }
         return taskList;
