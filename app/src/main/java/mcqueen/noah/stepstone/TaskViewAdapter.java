@@ -57,8 +57,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
 
         @Override
         public int compare(Task first, Task second) {
-            if (type == PRIORITYDOWN) { return Integer.compare(first.getPriority(), second.getPriority()); }
-            if (type == PRIORITYUP) { return Integer.compare(second.getPriority(), first.getPriority()); }
+            if (type == PRIORITYUP) { return Integer.compare(first.getPriority(), second.getPriority()); }
+            if (type == PRIORITYDOWN) { return Integer.compare(second.getPriority(), first.getPriority()); }
             else return 0;
         }
     }

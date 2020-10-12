@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements taskCard_creator.CreatorDialogListener{
+public class MainActivity extends AppCompatActivity{
+    private static final int TASKMOD_CODE = 0;
 
     private TaskViewAdapter adapter;
 
@@ -35,16 +37,6 @@ public class MainActivity extends AppCompatActivity implements taskCard_creator.
         Button button = findViewById(R.id.addTask_button);
         Spinner sortSpinner = findViewById(R.id.sortSpinner);
 
-        //Logic for button click events
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment newFragment = new taskCard_creator();
-                newFragment.show(getSupportFragmentManager(), "taskCreator");
-            }
-        });
-
-        //Logic for sorting spinner selection
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -57,21 +49,31 @@ public class MainActivity extends AppCompatActivity implements taskCard_creator.
         });
     }
 
+    public void launchTaskModifier(View view) {
+        Intent intent = new Intent(this, TaskModifierScreen.class);
+        startActivityForResult(intent, TASKMOD_CODE);
+    }
+
     @Override
-    public void onDialogPositiveClick(String description) {
-        adapter.addTask(new Task(description, null));
-        adapter.notifyDataSetChanged();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            String description = extras.getString("TASK_DESCRIPTION");
+            int priority = extras.getInt("TASK_PRIORITY");
+            adapter.addTask(new Task(description, null, priority));
+            adapter.notifyDataSetChanged();
+        }
     }
 
     //Generates a blank taskList to initialize TaskViewAdapter
     private List<Task> generateTaskList() {
         List<Task> taskList = new ArrayList<>();
 
-        //TODO: Remove this block of code, implemented for testing
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < 9; i++) {
             int random = (int)(Math.random()*7);
-            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", random),null));
-            taskList.get(i).setPriority(random);
+            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", random),null,random));
         }
         return taskList;
     }

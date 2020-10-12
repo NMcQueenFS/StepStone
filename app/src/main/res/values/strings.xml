@@ -3,4 +3,5 @@
     <string name="addTask">Add New Task</string>
     <string name="task_card_repeatability">Repeat</string>
     <string name="task_dueDate">Due Date</string>
+    <string name="title_activity_new_task_screen">NewTaskScreen</string>
 </resources>

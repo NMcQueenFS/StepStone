@@ -21,7 +21,7 @@ public class DatePickerFragment extends DialogFragment {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog.OnDateSetListener dateSetListener = (DatePickerDialog.OnDateSetListener) getTargetFragment();
-        datePicker = new DatePickerDialog(Objects.requireNonNull(getActivity()), dateSetListener, year, month, day);
+        datePicker = new DatePickerDialog(requireActivity(), dateSetListener, year, month, day);
         return datePicker;
     }
 }
