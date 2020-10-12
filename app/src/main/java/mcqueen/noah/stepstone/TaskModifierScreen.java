@@ -12,10 +12,10 @@ import android.widget.Spinner;
 public class TaskModifierScreen extends AppCompatActivity {
     public static final String INTENT_KEYCODE = "stepstone.KEYCODE";
 
-    int priority;
+    int priority, repeatability;
     EditText taskDescription;
     String description;
-    Spinner prioritySpinner;
+    Spinner prioritySpinner, repeatSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +23,23 @@ public class TaskModifierScreen extends AppCompatActivity {
         setContentView(R.layout.activity_task_modifier_screen);
 
         taskDescription = (EditText)findViewById(R.id.taskDescription_field);
-        prioritySpinner = (Spinner)findViewById(R.id.prioritySpinner);
 
+        prioritySpinner = (Spinner)findViewById(R.id.prioritySpinner);
         prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 priority = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        repeatSpinner = (Spinner)findViewById(R.id.repeatingSpinner);
+        repeatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                repeatability = position;
             }
 
             @Override
@@ -43,6 +54,7 @@ public class TaskModifierScreen extends AppCompatActivity {
         Bundle extras = new Bundle();
         extras.putString("TASK_DESCRIPTION", description);
         extras.putInt("TASK_PRIORITY",priority);
+        extras.putInt("TASK_REPEAT",repeatability);
         intent.putExtras(extras);
         setResult(RESULT_OK, intent);
         finish();

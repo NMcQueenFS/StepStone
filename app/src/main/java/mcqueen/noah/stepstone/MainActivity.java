@@ -1,7 +1,6 @@
 package mcqueen.noah.stepstone;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -17,8 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity{
-    private static final int TASKMOD_CODE = 0;
-
+    private static final int TASK_MOD_CODE = 0;
     private TaskViewAdapter adapter;
 
     @Override
@@ -33,27 +30,23 @@ public class MainActivity extends AppCompatActivity{
         taskRecycler.setHasFixedSize(true);
         taskRecycler.setAdapter(adapter);
 
-        //Recognize elements of the main activity screen
-        Button button = findViewById(R.id.addTask_button);
         Spinner sortSpinner = findViewById(R.id.sortSpinner);
-
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 adapter.TaskSort(position);
                 adapter.notifyDataSetChanged();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
+    //Launch the New Task window, then collect information from it to create the new task
     public void launchTaskModifier(View view) {
         Intent intent = new Intent(this, TaskModifierScreen.class);
-        startActivityForResult(intent, TASKMOD_CODE);
+        startActivityForResult(intent, TASK_MOD_CODE);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -62,7 +55,8 @@ public class MainActivity extends AppCompatActivity{
             Bundle extras = data.getExtras();
             String description = extras.getString("TASK_DESCRIPTION");
             int priority = extras.getInt("TASK_PRIORITY");
-            adapter.addTask(new Task(description, null, priority));
+            int repeat = extras.getInt("TASK_REPEAT");
+            adapter.addTask(new Task(description, null, priority, repeat));
             adapter.notifyDataSetChanged();
         }
     }
@@ -71,9 +65,8 @@ public class MainActivity extends AppCompatActivity{
     private List<Task> generateTaskList() {
         List<Task> taskList = new ArrayList<>();
 
-        for (int i = 0; i < 9; i++) {
-            int random = (int)(Math.random()*7);
-            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", random),null,random));
+        for (int i = 0; i < 5; i++) {
+            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", i),null,i, 0));
         }
         return taskList;
     }
