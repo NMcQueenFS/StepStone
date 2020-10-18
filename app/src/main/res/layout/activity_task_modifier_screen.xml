@@ -47,11 +47,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:longClickable="false"
         android:ems="10"
         android:focusable="false"
         android:inputType="none"
         android:labelFor="@+id/dueDate_Title"
+        android:longClickable="false"
+        android:onClick="selectDate"
         app:layout_constraintBottom_toBottomOf="@+id/dueDate_Title"
         app:layout_constraintStart_toEndOf="@+id/dueDate_Title"
         app:layout_constraintTop_toTopOf="@+id/dueDate_Title" />

@@ -2,18 +2,25 @@ package mcqueen.noah.stepstone;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class TaskModifierScreen extends AppCompatActivity {
     int priority, repeatability, taskPos;
     boolean isEditing;
     EditText taskDescription;
+    TextView taskDueDate;
     String description;
     Spinner prioritySpinner, repeatSpinner;
 
@@ -23,6 +30,7 @@ public class TaskModifierScreen extends AppCompatActivity {
         setContentView(R.layout.activity_task_modifier_screen);
 
         taskDescription = findViewById(R.id.taskDescription_field);
+        taskDueDate = findViewById((R.id.dueDate_display));
         Button acceptChangesButton = findViewById((R.id.task_accept_changes_button));
         Button deleteTaskButton = findViewById(R.id.delete_task_button);
 
@@ -48,6 +56,22 @@ public class TaskModifierScreen extends AppCompatActivity {
 
         acceptChangesButton.setText(isEditing ? "Accept Changes" : "Create Task");
         deleteTaskButton.setVisibility(isEditing ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    //Called when the due date EditText is pushed
+    public void selectDate(View view){
+        final Calendar calendar = Calendar.getInstance();
+        int yy = calendar.get(Calendar.YEAR);
+        int mm = calendar.get(Calendar.MONTH);
+        int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String date = calendar.getDisplayName(monthOfYear,Calendar.LONG_STANDALONE, Locale.US)+" "+String.valueOf(dayOfMonth)+", "+String.valueOf(year);
+                taskDueDate.setText(date);
+            }
+        }, yy, mm, dd);
+        datePicker.show();
     }
 
     //Called if Add Task/Accept Changes button is pushed
