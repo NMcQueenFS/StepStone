@@ -36,30 +36,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="example display" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/task_repeatable_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:text="@string/task_card_repeatability"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_completed_checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/task_description_textBox" />
-
-        <Spinner
-            android:id="@+id/repeat_spinner"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#00FFFFFF"
-            android:entries="@array/repeat_choices"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/task_repeatable_switch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/task_repeatable_switch"
-            app:layout_constraintTop_toTopOf="@+id/task_repeatable_switch" />
-
         <TextView
             android:id="@+id/task_priority_display"
             android:layout_width="wrap_content"
@@ -77,6 +53,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="TEST" />
+
+        <TextView
+            android:id="@+id/repeatability_text_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/task_completed_checkBox"
+            app:layout_constraintTop_toBottomOf="@id/task_description_textBox"
+            tools:text="test" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

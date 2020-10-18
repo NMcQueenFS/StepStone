@@ -13,11 +13,8 @@ public class taskCard extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Spinner repeatSpinner = findViewById(R.id.repeat_spinner);
-
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.repeat_choices,android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        repeatSpinner.setAdapter(spinnerAdapter);
     }
 }
 

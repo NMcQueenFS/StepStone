@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity{
     private static final int TASK_MOD_CODE = 0;
@@ -47,16 +49,30 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = new Intent(this, TaskModifierScreen.class);
         startActivityForResult(intent, TASK_MOD_CODE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            String description = extras.getString("TASK_DESCRIPTION");
+            String description = Objects.requireNonNull(extras).getString("TASK_DESCRIPTION");
             int priority = extras.getInt("TASK_PRIORITY");
             int repeat = extras.getInt("TASK_REPEAT");
-            adapter.addTask(new Task(description, null, priority, repeat));
+            adapter.addTask(new Task(Objects.requireNonNull(description), null, priority, repeat));
+            adapter.notifyDataSetChanged();
+        }
+        else if (resultCode == 2) {
+            Bundle extras = data.getExtras();
+            int taskPos = extras.getInt("TASK_POS_IN_LIST");
+            Task editingTask = adapter.getTaskList().get(taskPos);
+            editingTask.setDescription(extras.getString("TASK_DESCRIPTION"));
+            editingTask.setPriority(extras.getInt("TASK_PRIORITY"));
+            adapter.notifyDataSetChanged();
+        }
+        else if (resultCode == 99) {
+            int taskPos = data.getIntExtra("TASK_POS_IN_LIST",-1);
+            adapter.getTaskList().remove(taskPos);
             adapter.notifyDataSetChanged();
         }
     }

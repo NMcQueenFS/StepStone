@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter {
-    final private List<Task> tasks = new ArrayList<>();
+    public List<Task> tasks = new ArrayList<>();
 
     public TaskViewAdapter(final List<Task> tasks) {
         if (tasks != null) { this.tasks.addAll(tasks); }
@@ -42,6 +42,11 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
 
     public void addTask(Task task) {
         tasks.add(task);
+    }
+
+    public List<Task> getTaskList()
+    {
+        return tasks;
     }
 
     public void TaskSort(int type) {
