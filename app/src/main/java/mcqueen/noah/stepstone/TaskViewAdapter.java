@@ -6,16 +6,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter {
-    public List<Task> tasks = new ArrayList<>();
+    final public List<Task> tasks = new ArrayList<>();
 
     public TaskViewAdapter(final List<Task> tasks) {
         if (tasks != null) { this.tasks.addAll(tasks); }
@@ -75,8 +72,6 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
         }
 
         private int compareDueDate(Date first, Date second) {
-            String pattern = "MM/dd/yy";
-            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
             if (first.before(second)) return 1;
             else if (second.before(first)) return -1;
             else return 0;

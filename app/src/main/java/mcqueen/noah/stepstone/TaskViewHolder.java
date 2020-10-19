@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Date;
+
 public class TaskViewHolder extends RecyclerView.ViewHolder {
     final private TextView taskText, taskPriority, taskDueDate;
+    Date dueDate;
     private int priority;
 
     public TaskViewHolder(@NonNull View itemView) {
@@ -35,6 +36,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
                 extras.putInt("TASK_PRIORITY",priority);
                 extras.putBoolean("TASK_EXISTS",true);
                 extras.putInt("TASK_POS_IN_LIST",position);
+                extras.putLong("TASK_DUE_DATE", dueDate.getTime());
                 intent.putExtras(extras);
                 ((Activity)v.getContext()).startActivityForResult(intent, 2);
             }
@@ -44,6 +46,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
     public void bindData(final Task task) {
         taskText.setText(task.getDescription());
         priority = task.getPriority();
+        dueDate = task.getDueDate();
         taskDueDate.setText(task.getDueDate().toString());
         switch (task.getPriority())
         {

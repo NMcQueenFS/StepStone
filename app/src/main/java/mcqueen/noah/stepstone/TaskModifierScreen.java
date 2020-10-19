@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class TaskModifierScreen extends AppCompatActivity {
     int priority, repeatability, taskPos;

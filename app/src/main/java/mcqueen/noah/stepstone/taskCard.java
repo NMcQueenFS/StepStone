@@ -2,7 +2,6 @@ package mcqueen.noah.stepstone;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 public class taskCard extends MainActivity {
 

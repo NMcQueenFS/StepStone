@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_screen);
 
         //Define and assemble the recycler view for tasks to be visible
         adapter = new TaskViewAdapter(generateTaskList());
@@ -62,7 +61,9 @@ public class MainActivity extends AppCompatActivity{
             int priority = extras.getInt("TASK_PRIORITY");
             int repeat = extras.getInt("TASK_REPEAT");
             extras.get("TASK_DUE_DATE");
-            Date dueDate = (Date)extras.get("TASK_DUE_DATE");
+            Date dueDate = new Date();
+            dueDate.setTime(extras.getLong("TASK_DUE_DATE"));
+
             adapter.addTask(new Task(Objects.requireNonNull(description), dueDate, priority, repeat));
             adapter.notifyDataSetChanged();
         }

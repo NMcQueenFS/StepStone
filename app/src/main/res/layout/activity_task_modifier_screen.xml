@@ -49,13 +49,15 @@
         android:clickable="true"
         android:ems="10"
         android:focusable="false"
+        android:hint="No due date set"
         android:inputType="none"
         android:labelFor="@+id/dueDate_Title"
         android:longClickable="false"
         android:onClick="selectDate"
         app:layout_constraintBottom_toBottomOf="@+id/dueDate_Title"
         app:layout_constraintStart_toEndOf="@+id/dueDate_Title"
-        app:layout_constraintTop_toTopOf="@+id/dueDate_Title" />
+        app:layout_constraintTop_toTopOf="@+id/dueDate_Title"
+        tools:ignore="TextFields" />
 
     <TextView
         android:id="@+id/dueDate_Title"
