@@ -14,13 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class TaskModifierScreen extends AppCompatActivity {
     int priority, repeatability, taskPos;
     boolean isEditing;
     EditText taskDescription;
-    TextView taskDueDate;
+    Date taskDueDate;
+    TextView taskDueDateDisplay;
     String description;
     Spinner prioritySpinner, repeatSpinner;
 
@@ -30,7 +32,7 @@ public class TaskModifierScreen extends AppCompatActivity {
         setContentView(R.layout.activity_task_modifier_screen);
 
         taskDescription = findViewById(R.id.taskDescription_field);
-        taskDueDate = findViewById((R.id.dueDate_display));
+        taskDueDateDisplay = findViewById((R.id.dueDate_display));
         Button acceptChangesButton = findViewById((R.id.task_accept_changes_button));
         Button deleteTaskButton = findViewById(R.id.delete_task_button);
 
@@ -67,8 +69,9 @@ public class TaskModifierScreen extends AppCompatActivity {
         DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String date = calendar.getDisplayName(monthOfYear,Calendar.LONG_STANDALONE, Locale.US)+" "+String.valueOf(dayOfMonth)+", "+String.valueOf(year);
-                taskDueDate.setText(date);
+                calendar.set(year,monthOfYear,dayOfMonth);
+                taskDueDate = calendar.getTime();
+                taskDueDateDisplay.setText(taskDueDate.toString());
             }
         }, yy, mm, dd);
         datePicker.show();
@@ -83,6 +86,7 @@ public class TaskModifierScreen extends AppCompatActivity {
         extras.putString("TASK_DESCRIPTION", description);
         extras.putInt("TASK_PRIORITY",priority);
         extras.putInt("TASK_REPEAT",repeatability);
+        extras.putLong("TASK_DUE_DATE", taskDueDate.getTime());
         if(isEditing) extras.putInt("TASK_POS_IN_LIST",taskPos);
         intent.putExtras(extras);
 

@@ -14,9 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TaskViewHolder extends RecyclerView.ViewHolder {
-    final private TextView taskText;
-    final private TextView taskPriority;
-
+    final private TextView taskText, taskPriority, taskDueDate;
     private int priority;
 
     public TaskViewHolder(@NonNull View itemView) {
@@ -25,7 +23,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
         CardView taskCard = itemView.findViewById(R.id.task_card_completeUnit);
         taskText = taskCard.findViewById(R.id.task_description_textBox);
         taskPriority = taskCard.findViewById(R.id.task_priority_display);
-        Spinner prioritySpinner = taskCard.findViewById(R.id.prioritySpinner);
+        taskDueDate = taskCard.findViewById(R.id.taskCard_dueDate_display);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +44,7 @@ public class TaskViewHolder extends RecyclerView.ViewHolder {
     public void bindData(final Task task) {
         taskText.setText(task.getDescription());
         priority = task.getPriority();
+        taskDueDate.setText(task.getDueDate().toString());
         switch (task.getPriority())
         {
             case 0:

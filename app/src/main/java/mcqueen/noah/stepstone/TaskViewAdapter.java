@@ -7,8 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class TaskViewAdapter extends RecyclerView.Adapter {
@@ -64,6 +67,18 @@ public class TaskViewAdapter extends RecyclerView.Adapter {
         public int compare(Task first, Task second) {
             if (type == PRIORITYUP) { return Integer.compare(first.getPriority(), second.getPriority()); }
             if (type == PRIORITYDOWN) { return Integer.compare(second.getPriority(), first.getPriority()); }
+            if (type == DESCUP) { return first.getDescription().compareTo(second.getDescription()); }
+            if (type == DESCDOWN) { return second.getDescription().compareTo(first.getDescription()); }
+            if (type == DUEUP) { return compareDueDate(first.getDueDate(),second.getDueDate()); }
+            if (type == DUEDOWN) { return compareDueDate(second.getDueDate(),first.getDueDate()); }
+            else return 0;
+        }
+
+        private int compareDueDate(Date first, Date second) {
+            String pattern = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            if (first.before(second)) return 1;
+            else if (second.before(first)) return -1;
             else return 0;
         }
     }

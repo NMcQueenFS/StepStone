@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -59,7 +61,9 @@ public class MainActivity extends AppCompatActivity{
             String description = Objects.requireNonNull(extras).getString("TASK_DESCRIPTION");
             int priority = extras.getInt("TASK_PRIORITY");
             int repeat = extras.getInt("TASK_REPEAT");
-            adapter.addTask(new Task(Objects.requireNonNull(description), null, priority, repeat));
+            extras.get("TASK_DUE_DATE");
+            Date dueDate = (Date)extras.get("TASK_DUE_DATE");
+            adapter.addTask(new Task(Objects.requireNonNull(description), dueDate, priority, repeat));
             adapter.notifyDataSetChanged();
         }
         else if (resultCode == 2) {
@@ -68,6 +72,11 @@ public class MainActivity extends AppCompatActivity{
             Task editingTask = adapter.getTaskList().get(taskPos);
             editingTask.setDescription(extras.getString("TASK_DESCRIPTION"));
             editingTask.setPriority(extras.getInt("TASK_PRIORITY"));
+
+            Date d = new Date();
+            d.setTime(extras.getLong("TASK_DUE_DATE"));
+            editingTask.setDueDate(d);
+
             adapter.notifyDataSetChanged();
         }
         else if (resultCode == 99) {
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity{
         List<Task> taskList = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", i),null,i, 0));
+            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", i), Calendar.getInstance().getTime(),i, 0));
         }
         return taskList;
     }

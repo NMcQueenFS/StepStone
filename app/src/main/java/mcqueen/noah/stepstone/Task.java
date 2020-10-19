@@ -2,11 +2,13 @@ package mcqueen.noah.stepstone;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
 import java.util.List;
 
 public class Task {
     //Variables
-    private String description, dueDate;
+    private String description;
+    private Date dueDate;
     private boolean completed, repeatable;
     private int priority, repeatability;
     private Task parentTask;
@@ -14,7 +16,7 @@ public class Task {
 
     //Constructors
     public Task(){}
-    public Task(@NonNull final String description, final String dueDate, final int priority, final int repeat) {
+    public Task(@NonNull final String description, final Date dueDate, final int priority, final int repeat) {
         setDescription(description);
         setDueDate(dueDate);
         setPriority(priority);
@@ -23,7 +25,7 @@ public class Task {
 
     //Setters
     public void setDescription(String description) { this.description = description; }
-    public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+    public void setDueDate(@NonNull Date dueDate) { this.dueDate = dueDate; }
     public void setPriority(int priority) { this.priority = priority; }
     public void setCompleted(boolean completed) { this.completed = completed; }
     public void setRepeatable(boolean repeatable) { this.repeatable = repeatable; }
@@ -33,7 +35,7 @@ public class Task {
 
     //Getters
     public String getDescription() { return description; }
-    public String getDueDate() { return dueDate; }
+    public Date getDueDate() { return dueDate; }
     public int getPriority() { return priority; }
     public boolean getCompleted() { return completed; }
     public int getRepeatability() { return  repeatability; }
