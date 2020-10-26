@@ -36,4 +36,6 @@ public class Task {
     public int getRepeatability() { return  repeatability; }
     public Task getParentTask() { return parentTask; }
     public List<Task> getChildTasks() { return childTasks; }
+
+    public void AddChild(Task child){ this.childTasks.add(child); }
 }

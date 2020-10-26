@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -41,18 +43,20 @@ public class TaskModifierScreen extends AppCompatActivity {
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        repeatSpinner = findViewById(R.id.repeatingSpinner);
-        repeatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { repeatability = position; }
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
-        });
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.getBoolean("TASK_EXISTS")) isEditing = true;
             if (extras.getString("TASK_DESCRIPTION") != null) taskDescription.setText(extras.getString("TASK_DESCRIPTION"));
             prioritySpinner.setSelection(extras.getInt("TASK_PRIORITY"));
             taskPos = extras.getInt("TASK_POS_IN_LIST");
+
+            Date newDate = new Date();
+            newDate.setTime(extras.getLong("TASK_DUE_DATE"));
+            taskDueDate = newDate;
+            SimpleDateFormat sdf = new SimpleDateFormat();
+            sdf.applyPattern("MM/dd/yyyy");
+            String dueDateString =sdf.format(taskDueDate);
+            taskDueDateDisplay.setText(dueDateString);
         }
 
         acceptChangesButton.setText(isEditing ? "Accept Changes" : "Create Task");
@@ -65,12 +69,16 @@ public class TaskModifierScreen extends AppCompatActivity {
         int yy = calendar.get(Calendar.YEAR);
         int mm = calendar.get(Calendar.MONTH);
         int dd = calendar.get(Calendar.DAY_OF_MONTH);
+        Date today = calendar.getTime();
         DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year,monthOfYear,dayOfMonth);
                 taskDueDate = calendar.getTime();
-                taskDueDateDisplay.setText(taskDueDate.toString());
+                SimpleDateFormat sdf = new SimpleDateFormat();
+                sdf.applyPattern("MM/dd/yyyy");
+                String dueDateString =sdf.format(taskDueDate);
+                taskDueDateDisplay.setText(dueDateString);
             }
         }, yy, mm, dd);
         datePicker.show();

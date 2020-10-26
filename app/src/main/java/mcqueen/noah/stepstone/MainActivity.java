@@ -1,15 +1,16 @@
 package mcqueen.noah.stepstone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity{
     private static final int TASK_MOD_CODE = 0;
     private TaskViewAdapter adapter;
+    private int sortMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +29,40 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.main_screen);
 
         //Define and assemble the recycler view for tasks to be visible
-        adapter = new TaskViewAdapter(generateTaskList());
+        //TODO: set this back to being null when done with demo
+        adapter = new TaskViewAdapter(generateQuickList());
         RecyclerView taskRecycler = findViewById(R.id.taskList);
         taskRecycler.setLayoutManager(new LinearLayoutManager(this));
         taskRecycler.setHasFixedSize(true);
         taskRecycler.setAdapter(adapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TaskViewAdapter.SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(taskRecycler);
 
         Spinner sortSpinner = findViewById(R.id.sortSpinner);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adapter.TaskSort(position);
+                sortMethod = position;
+                adapter.TaskSort(sortMethod);
                 adapter.notifyDataSetChanged();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
+
+    private List<Task> generateQuickList(){
+        List<Task> dump= new ArrayList<>();
+        Date dumpdate = Calendar.getInstance().getTime();
+        dump.add(new Task("Come up with name for new pet", dumpdate, 1, 0));
+        dump.add(new Task("Get stamina up for 24",dumpdate, 5,0));
+        dump.add(new Task("Research new perks",dumpdate, 5,0));
+        dump.add(new Task("Clear level 8 dungeon",dumpdate, 3,0));
+        dump.add(new Task("Get to level 15",dumpdate, 3,0));
+        dump.add(new Task("Finish all quests in area",dumpdate, 4,0));
+        dump.add(new Task("Move on to new leveling zone",dumpdate, 4,0));
+        dump.add(new Task("Make a caster alt?",dumpdate, 0,0));
+        return dump;
     }
 
     //Launch the New Task window, then collect information from it to create the new task
@@ -85,15 +105,6 @@ public class MainActivity extends AppCompatActivity{
             adapter.getTaskList().remove(taskPos);
             adapter.notifyDataSetChanged();
         }
-    }
-
-    //Generates a blank taskList to initialize TaskViewAdapter
-    private List<Task> generateTaskList() {
-        List<Task> taskList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            taskList.add(new Task(String.format(Locale.US,"My priority is: %d", i), Calendar.getInstance().getTime(),i, 0));
-        }
-        return taskList;
+        adapter.TaskSort(sortMethod);
     }
 }

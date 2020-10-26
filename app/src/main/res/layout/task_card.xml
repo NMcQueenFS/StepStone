@@ -7,77 +7,82 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:paddingBottom="6dp"
-    app:cardBackgroundColor="#00BCD4"
+    app:cardBackgroundColor="#63EDFF"
     app:cardCornerRadius="18dp"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/task_completed_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/task_description_textBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textColor="#185860"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/task_completed_checkBox"
-            app:layout_constraintStart_toEndOf="@+id/task_completed_checkBox"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="example display" />
+            <TextView
+                android:id="@+id/task_description_textBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#00BCD4"
+                android:paddingLeft="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="#185860"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="example display" />
 
-        <TextView
-            android:id="@+id/task_priority_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="#FFFFFF"
-            android:paddingHorizontal="8sp"
-            android:paddingVertical="2sp"
-            android:shadowColor="@color/textShadowColor"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="0.25"
-            android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="TEST" />
+            <TextView
+                android:id="@+id/task_priority_display"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="#FFFFFF"
+                android:paddingHorizontal="12sp"
+                android:paddingVertical="4sp"
+                android:shadowColor="@color/textShadowColor"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="0.25"
+                android:textAlignment="textEnd"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/task_description_textBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/task_description_textBox"
+                tools:text="TEST" />
 
-        <TextView
-            android:id="@+id/repeatability_text_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/task_completed_checkBox"
-            app:layout_constraintTop_toBottomOf="@id/task_description_textBox"
-            tools:text="test" />
+            <TextView
+                android:id="@+id/taskCard_dueDate_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:drawableTop="@drawable/baseline_event_black_18dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/task_description_textBox"
+                tools:text="due date test" />
 
-        <TextView
-            android:id="@+id/taskCard_dueDate_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:textAlignment="textEnd"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/task_priority_display"
-            tools:text="due date test" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/task_children_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
