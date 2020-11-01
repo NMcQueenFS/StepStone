@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,31 +16,32 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class TaskModifierScreen extends AppCompatActivity {
-    int priority, repeatability, taskPos;
+    int priority, taskPos;
     boolean isEditing;
     EditText taskDescription;
     Date taskDueDate;
     TextView taskDueDateDisplay;
     String description;
-    Spinner prioritySpinner, repeatSpinner;
+    Spinner prioritySpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_modifier_screen);
-
         taskDescription = findViewById(R.id.taskDescription_field);
         taskDueDateDisplay = findViewById((R.id.dueDate_display));
         Button acceptChangesButton = findViewById((R.id.task_accept_changes_button));
         Button deleteTaskButton = findViewById(R.id.delete_task_button);
-
         prioritySpinner = findViewById(R.id.prioritySpinner);
         prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { priority = position; }
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         });
+
+        taskDueDate = Calendar.getInstance().getTime();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -49,11 +49,10 @@ public class TaskModifierScreen extends AppCompatActivity {
             if (extras.getString("TASK_DESCRIPTION") != null) taskDescription.setText(extras.getString("TASK_DESCRIPTION"));
             prioritySpinner.setSelection(extras.getInt("TASK_PRIORITY"));
             taskPos = extras.getInt("TASK_POS_IN_LIST");
-
             Date newDate = new Date();
             newDate.setTime(extras.getLong("TASK_DUE_DATE"));
             taskDueDate = newDate;
-            SimpleDateFormat sdf = new SimpleDateFormat();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
             sdf.applyPattern("MM/dd/yyyy");
             String dueDateString =sdf.format(taskDueDate);
             taskDueDateDisplay.setText(dueDateString);
@@ -69,13 +68,12 @@ public class TaskModifierScreen extends AppCompatActivity {
         int yy = calendar.get(Calendar.YEAR);
         int mm = calendar.get(Calendar.MONTH);
         int dd = calendar.get(Calendar.DAY_OF_MONTH);
-        Date today = calendar.getTime();
         DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 calendar.set(year,monthOfYear,dayOfMonth);
                 taskDueDate = calendar.getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
                 sdf.applyPattern("MM/dd/yyyy");
                 String dueDateString =sdf.format(taskDueDate);
                 taskDueDateDisplay.setText(dueDateString);
@@ -92,13 +90,11 @@ public class TaskModifierScreen extends AppCompatActivity {
         Bundle extras = new Bundle();
         extras.putString("TASK_DESCRIPTION", description);
         extras.putInt("TASK_PRIORITY",priority);
-        extras.putInt("TASK_REPEAT",repeatability);
         extras.putLong("TASK_DUE_DATE", taskDueDate.getTime());
         if(isEditing) extras.putInt("TASK_POS_IN_LIST",taskPos);
         intent.putExtras(extras);
-
         if (isEditing) setResult(2, intent);
-        else setResult(RESULT_OK, intent);
+        else setResult(0, intent);
         finish();
     }
 

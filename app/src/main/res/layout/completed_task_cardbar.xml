@@ -24,10 +24,11 @@
                 android:id="@+id/completedCard_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="#00BCD4"
+                android:background="#BCBCBC"
+                android:drawableLeft="@drawable/baseline_check_black_18"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 android:paddingTop="4dp"
+                android:paddingEnd="10dp"
                 android:paddingBottom="4dp"
                 android:textColor="#185860"
                 android:textSize="18sp"
@@ -37,41 +38,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="example display" />
 
-            <TextView
-                android:id="@+id/task_priority_display"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:background="#FFFFFF"
-                android:paddingHorizontal="12sp"
-                android:paddingVertical="4sp"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="0.25"
-                android:textAlignment="textEnd"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/completedCard_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/completedCard_description"
-                tools:text="TEST" />
-
-            <TextView
-                android:id="@+id/taskCard_dueDate_display"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:paddingVertical="4dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/completedCard_description"
-                tools:text="due date test"
-                app:drawableTopCompat="@drawable/baseline_event_black_18dp" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

@@ -45,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:drawableTop="@drawable/baseline_event_black_18dp"
         android:text="@string/task_dueDate"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="@+id/taskDescription_field"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescription_field" />
+        app:layout_constraintTop_toBottomOf="@+id/taskDescription_field"
+        app:drawableTopCompat="@drawable/baseline_event_black_18dp" />
 
     <Button
         android:id="@+id/task_accept_changes_button"
@@ -77,12 +77,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:drawableTop="@drawable/baseline_insights_black_24"
         android:text="Priority"
         android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/dueDate_display"
         app:layout_constraintStart_toStartOf="@+id/dueDate_Title"
-        app:layout_constraintTop_toBottomOf="@+id/dueDate_Title" />
+        app:layout_constraintTop_toBottomOf="@+id/dueDate_Title"
+        app:drawableTopCompat="@drawable/baseline_insights_black_24" />
 
     <Button
         android:id="@+id/delete_task_button"

@@ -16,22 +16,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
-    public List<Task> tasks;
+    final public List<Task> tasks;
     protected static TaskViewAdapter thisTaskAdapter;
+    private CompletedTaskAdapter completedList;
 
-    public TaskViewAdapter(List<Task> givenTasks) {
+    public TaskViewAdapter(CompletedTaskAdapter completeList) {
         this.tasks = new ArrayList<>();
-        this.tasks.addAll(givenTasks);
         thisTaskAdapter = this;
+        completedList = completeList;
     }
 
     public List<Task> getTaskList()
@@ -46,19 +46,25 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
         tasks.remove(position);
         notifyItemRemoved(position);
     }
+    public void completeItem(int position) {
+        completedList.addTask(tasks.get(position));
+        completedList.notifyDataSetChanged();
+        tasks.remove(position);
+        notifyItemRemoved(position);
+    }
 
     @Override public int getItemCount() { return tasks.size(); }
     @Override public int getItemViewType(final int position) { return R.layout.task_card; }
 
     @NonNull
     @Override
-    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_card, parent,false);
         return new TaskViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(TaskViewAdapter.TaskViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskViewAdapter.TaskViewHolder holder, int position) {
         holder.bindData(tasks.get(position));
     }
 
@@ -71,7 +77,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             super(itemView);
 
             CardView taskCard = itemView.findViewById(R.id.task_card_completeUnit);
-            taskText = taskCard.findViewById(R.id.task_description_textBox);
+            taskText = taskCard.findViewById(R.id.completedCard_description);
             taskPriority = taskCard.findViewById(R.id.task_priority_display);
             taskDueDate = taskCard.findViewById(R.id.taskCard_dueDate_display);
 
@@ -96,7 +102,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             taskText.setText(task.getDescription());
             priority = task.getPriority();
             dueDate = task.getDueDate();
-            SimpleDateFormat sdf = new SimpleDateFormat();
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
             sdf.applyPattern("MM/dd/yyyy");
             String dueDateString =sdf.format(dueDate);
 
@@ -144,9 +150,9 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
         private final ColorDrawable background;
 
         public SwipeToDeleteCallback(TaskViewAdapter adapter) {
-            super(0, ItemTouchHelper.LEFT);
+            super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
             thisTaskAdapter = adapter;
-            background = new ColorDrawable(Color.RED);
+            background = new ColorDrawable(Color.WHITE);
         }
 
         @Override
@@ -156,14 +162,16 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             int backgroundCornerOffset = 20;
 
             if (dX > 0) { // Swiping to the right
-                background.setBounds(itemView.getLeft(), itemView.getTop(),
-                        itemView.getLeft() + ((int) dX) + backgroundCornerOffset,
-                        itemView.getBottom());
-            } else if (dX < 0) { // Swiping to the left
-                background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset,
-                        itemView.getTop(), itemView.getRight(), itemView.getBottom());
-            } else { // view is unSwiped
+                background.setBounds(itemView.getLeft(), itemView.getTop(),itemView.getLeft() + ((int) dX) + backgroundCornerOffset, itemView.getBottom());
+                background.setColor(Color.GREEN);
+            }
+            else if (dX < 0) { // Swiping to the left
+                background.setBounds(itemView.getRight() + ((int) dX) - backgroundCornerOffset, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+                background.setColor(Color.RED);
+            }
+            else { // view is unSwiped
                 background.setBounds(0, 0, 0, 0);
+                background.setColor(Color.WHITE);
             }
             background.draw(c);
         }
@@ -176,7 +184,8 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            thisTaskAdapter.deleteItem(position);
+            if (direction == 4) thisTaskAdapter.deleteItem(position);
+            else if (direction == 8) thisTaskAdapter.completeItem(position);
         }
     }
 
