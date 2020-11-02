@@ -7,7 +7,5 @@
         <item>High</item>
         <item>Very High</item>
         <item>Urgent</item>
-        <item>Overdue</item>
-        <item>Broken!</item>
     </string-array>
 </resources>

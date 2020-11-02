@@ -2,9 +2,4 @@
     <string name="app_name">StepStone</string>
     <string name="addTask">Add New Task</string>
     <string name="task_dueDate">Due Date</string>
-    <string name="title_activity_view_master">MainActivity</string>
-    <string name="title_goals">Goals</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_settings">Settings</string>
-    <string name="title_activity_main2">MainActivity</string>
 </resources>

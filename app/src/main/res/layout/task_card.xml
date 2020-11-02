@@ -61,10 +61,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:paddingVertical="4dp"
+                app:drawableTopCompat="@drawable/baseline_event_black_18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/completedCard_description"
-                tools:text="due date test"
-                app:drawableTopCompat="@drawable/baseline_event_black_18dp" />
+                tools:text="due date test" />
+
+            <TextView
+                android:id="@+id/taskCard_childCount_Display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/baseline_fact_check_black_18dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/completedCard_description"
+                tools:text="child count display" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

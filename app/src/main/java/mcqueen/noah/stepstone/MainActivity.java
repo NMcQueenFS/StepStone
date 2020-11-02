@@ -18,13 +18,12 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity{
     private static final int TASK_MOD_CODE = 0;
     private TaskViewAdapter activeTaskAdapter;
-    private CompletedTaskAdapter completedTaskAdapter;
     private int sortMethod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_screen);
+        setContentView(R.layout.goal_tracking_screen);
 
         Button addTaskButton = findViewById(R.id.addTask_button);
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
         //Define and assemble the recycler view for tasks to be visible
-        completedTaskAdapter = new CompletedTaskAdapter();
+        CompletedTaskAdapter completedTaskAdapter = new CompletedTaskAdapter();
         RecyclerView completedTaskRecycler = findViewById(R.id.completedList);
         completedTaskRecycler.setLayoutManager(new LinearLayoutManager(this));
         completedTaskRecycler.setHasFixedSize(true);
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
     }
 
     //Launch the New Task window, then collect information from it to create the new task

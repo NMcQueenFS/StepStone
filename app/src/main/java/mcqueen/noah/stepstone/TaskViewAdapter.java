@@ -26,7 +26,7 @@ import java.util.Locale;
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     final public List<Task> tasks;
     protected static TaskViewAdapter thisTaskAdapter;
-    private CompletedTaskAdapter completedList;
+    private final CompletedTaskAdapter completedList;
 
     public TaskViewAdapter(CompletedTaskAdapter completeList) {
         this.tasks = new ArrayList<>();
@@ -69,7 +69,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
     }
 
     static class TaskViewHolder extends RecyclerView.ViewHolder{
-        final private TextView taskText, taskPriority, taskDueDate;
+        final private TextView taskText, taskPriority, taskDueDate, taskChildCount;
         Date dueDate;
         private int priority;
 
@@ -80,6 +80,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             taskText = taskCard.findViewById(R.id.completedCard_description);
             taskPriority = taskCard.findViewById(R.id.task_priority_display);
             taskDueDate = taskCard.findViewById(R.id.taskCard_dueDate_display);
+            taskChildCount = taskCard.findViewById(R.id.taskCard_childCount_Display);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,6 +108,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
             String dueDateString =sdf.format(dueDate);
 
             taskDueDate.setText(dueDateString);
+            taskChildCount.setText("0 SubTasks");
 
             switch (task.getPriority())
             {
@@ -132,10 +134,6 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
                     break;
                 case 5:
                     taskPriority.setText("Urgent");
-                    taskPriority.setBackgroundColor(Color.parseColor("#FF0000")); //Red
-                    break;
-                case 6:
-                    taskPriority.setText("Overdue");
                     taskPriority.setBackgroundColor(Color.parseColor("#FF0000")); //Red
                     break;
                 default:
