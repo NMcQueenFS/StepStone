@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/createNew_goal"
+        android:title="New Goal"/>
+    <item android:id="@+id/createNew_task"
+        android:title="New Task"/>
+</menu>

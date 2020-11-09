@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,12 +27,11 @@ import java.util.Locale;
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     final public List<Task> tasks;
     protected static TaskViewAdapter thisTaskAdapter;
-    private final CompletedTaskAdapter completedList;
 
-    public TaskViewAdapter(CompletedTaskAdapter completeList) {
-        this.tasks = new ArrayList<>();
+    public TaskViewAdapter(List<Task> startingTasks) {
+        if (startingTasks != null) tasks = startingTasks;
+        else tasks = new ArrayList<>();
         thisTaskAdapter = this;
-        completedList = completeList;
     }
 
     public List<Task> getTaskList()
@@ -41,14 +41,13 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
 
     public void addTask(Task task) {
         tasks.add(task);
+        notifyDataSetChanged();
     }
     public void deleteItem(int position) {
         tasks.remove(position);
         notifyItemRemoved(position);
     }
     public void completeItem(int position) {
-        completedList.addTask(tasks.get(position));
-        completedList.notifyDataSetChanged();
         tasks.remove(position);
         notifyItemRemoved(position);
     }
@@ -60,6 +59,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_card, parent,false);
+
         return new TaskViewHolder(view);
     }
 
@@ -214,6 +214,7 @@ public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskVi
 
     public void TaskSort(int type) {
         tasks.sort(new CustomComparator(type));
+        thisTaskAdapter.notifyDataSetChanged();
     }
 }
 
