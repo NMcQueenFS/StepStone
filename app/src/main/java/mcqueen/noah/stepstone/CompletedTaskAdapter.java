@@ -21,6 +21,7 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdap
 
     public void addTask(Task task) {
         tasks.add(task);
+        notifyDataSetChanged();
     }
 
     @Override public int getItemCount() { return tasks.size(); }

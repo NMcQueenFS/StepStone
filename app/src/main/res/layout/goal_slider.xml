@@ -8,11 +8,15 @@
     tools:context=".GoalViewManager">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="Goal Display goes here once working"
+        android:id="@+id/goal_description_textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00BCD4"
+        android:hint="Add a goal to continue"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/nextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +29,7 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="Button to add new goals or tasks"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 
@@ -32,14 +37,24 @@
         android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="refreshToNext"
         android:text="Next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="refreshToPrevious"
+        android:text="Previous"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/placeholder_doohicky"
+        android:id="@+id/goal_bar_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="24dp"
@@ -48,9 +63,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/goal_description_textView" />
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/goal_slider"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -58,6 +73,6 @@
         app:layout_constraintBottom_toTopOf="@+id/goalManager_fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/goal_description_textView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

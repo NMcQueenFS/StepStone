@@ -1,17 +1,11 @@
 package mcqueen.noah.stepstone;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -20,9 +14,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Date;
 import java.util.List;
 
 public class GoalView extends Fragment{
@@ -31,14 +22,16 @@ public class GoalView extends Fragment{
     private TaskViewAdapter activeTaskAdapter;
     private GoalViewModel goalModel;
 
+    GoalView(){
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         goalModel = new ViewModelProvider(requireActivity()).get(GoalViewModel.class);
-        goalModel.getNewestTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
+
+        goalModel.getActiveTasks().observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
-            public void onChanged(Task task) {
-                activeTaskAdapter.addTask(task);
+            public void onChanged(List<Task> tasks) {
                 activeTaskAdapter.notifyDataSetChanged();
             }
         });
@@ -53,7 +46,7 @@ public class GoalView extends Fragment{
         completedTaskRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         completedTaskRecycler.setHasFixedSize(true);
         completedTaskRecycler.setAdapter(completedTaskAdapter);
-        activeTaskAdapter = new TaskViewAdapter(goalModel.getActiveTasks().getValue());
+        activeTaskAdapter = new TaskViewAdapter(goalModel.getActiveTasks().getValue(),completedTaskAdapter);
         RecyclerView activeTaskRecycler = view.findViewById(R.id.taskList);
         activeTaskRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         activeTaskRecycler.setHasFixedSize(true);

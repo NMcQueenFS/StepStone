@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".TaskModifierScreen" />
+        <activity android:name=".GoalCreationScreen"/>
         <activity android:name=".GoalViewManager">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

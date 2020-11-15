@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,27 +26,21 @@ import java.util.Locale;
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     final public List<Task> tasks;
     protected static TaskViewAdapter thisTaskAdapter;
+    private final CompletedTaskAdapter completedList;
 
-    public TaskViewAdapter(List<Task> startingTasks) {
+    public TaskViewAdapter(List<Task> startingTasks, CompletedTaskAdapter completed) {
         if (startingTasks != null) tasks = startingTasks;
         else tasks = new ArrayList<>();
         thisTaskAdapter = this;
+        completedList = completed;
     }
 
-    public List<Task> getTaskList()
-    {
-        return tasks;
-    }
-
-    public void addTask(Task task) {
-        tasks.add(task);
-        notifyDataSetChanged();
-    }
     public void deleteItem(int position) {
         tasks.remove(position);
         notifyItemRemoved(position);
     }
     public void completeItem(int position) {
+        completedList.addTask(tasks.get(position));
         tasks.remove(position);
         notifyItemRemoved(position);
     }
