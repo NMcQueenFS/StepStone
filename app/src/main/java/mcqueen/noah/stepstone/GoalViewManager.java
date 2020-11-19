@@ -1,15 +1,17 @@
 package mcqueen.noah.stepstone;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -19,28 +21,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GoalViewManager extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private static final int TASK_MOD_CODE = 0;
     private GoalViewModel goalModel;
     private TextView goalDescription;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.goal_slider);
-        goalDescription = findViewById(R.id.goal_description_textView);
 
-        goalModel = new ViewModelProvider(this).get(GoalViewModel.class);
-        goalModel.getActiveGoal().observe(this, new Observer<Goal>() {
+        return inflater.inflate(R.layout.goal_slider,container,false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        goalDescription = view.findViewById(R.id.goal_description_textView);
+
+        goalModel = new ViewModelProvider(requireActivity()).get(GoalViewModel.class);
+        goalModel.getActiveGoal().observe(getViewLifecycleOwner(), new Observer<Goal>() {
             @Override
             public void onChanged(Goal goal) {
-                findViewById(R.id.goal_bar_placeholder).setVisibility(View.GONE);
+                //view.findViewById(R.id.goal_bar_placeholder).setVisibility(View.GONE);
                 goalDescription.setText(goalModel.getActiveGoal().getValue().getDescription());
                 refreshScreen();
             }
         });
 
-        FloatingActionButton fab = findViewById(R.id.goalManager_fab);
+        FloatingActionButton fab = view.findViewById(R.id.goalManager_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +57,7 @@ public class GoalViewManager extends AppCompatActivity implements PopupMenu.OnMe
     }
 
     public void showCreateNewPopup(View view) {
-        PopupMenu popup = new PopupMenu(GoalViewManager.this, view);
+        PopupMenu popup = new PopupMenu(getContext(), view);
         popup.setOnMenuItemClickListener(GoalViewManager.this);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.createnew_menu,popup.getMenu());
@@ -73,17 +80,17 @@ public class GoalViewManager extends AppCompatActivity implements PopupMenu.OnMe
     }
 
     private void launchTaskModifier() {
-        Intent intent = new Intent(this, TaskModifierScreen.class);
+        Intent intent = new Intent(getContext(), TaskModifierScreen.class);
         startActivityForResult(intent, TASK_MOD_CODE);
     }
 
     private void makeNewGoal() {
-        Intent intent = new Intent(this, GoalCreationScreen.class);
+        Intent intent = new Intent(getContext(), GoalCreationScreen.class);
         startActivityForResult(intent, TASK_MOD_CODE);
     }
 
     private void refreshScreen() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
         GoalView goalView = new GoalView();
         ft.replace(R.id.goal_slider,goalView);
         ft.commit();
