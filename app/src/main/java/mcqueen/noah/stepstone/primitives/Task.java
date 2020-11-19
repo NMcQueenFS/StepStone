@@ -1,4 +1,4 @@
-package mcqueen.noah.stepstone;
+package mcqueen.noah.stepstone.primitives;
 
 import androidx.annotation.NonNull;
 

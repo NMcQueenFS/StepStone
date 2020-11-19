@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import mcqueen.noah.stepstone.primitives.Task;
+
 public class TaskViewAdapter extends RecyclerView.Adapter<TaskViewAdapter.TaskViewHolder> {
     final public List<Task> tasks;
     protected static TaskViewAdapter thisTaskAdapter;

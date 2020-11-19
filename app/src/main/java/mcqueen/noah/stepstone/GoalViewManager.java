@@ -5,11 +5,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -20,6 +23,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import mcqueen.noah.stepstone.primitives.Goal;
+import mcqueen.noah.stepstone.primitives.Task;
 
 public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private static final int TASK_MOD_CODE = 0;
@@ -36,12 +42,22 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         goalDescription = view.findViewById(R.id.goal_description_textView);
+        goalDescription.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
+            public void onSwipeLeft() {
+                refreshToNext();
+            }
+            public void onSwipeRight() {
+                refreshToPrevious();
+            }
+        });
+
+        final TextView placeholder = view.findViewById(R.id.goal_bar_placeholder);
 
         goalModel = new ViewModelProvider(requireActivity()).get(GoalViewModel.class);
         goalModel.getActiveGoal().observe(getViewLifecycleOwner(), new Observer<Goal>() {
             @Override
             public void onChanged(Goal goal) {
-                //view.findViewById(R.id.goal_bar_placeholder).setVisibility(View.GONE);
+                if (goalModel.getGoalCount() > 0) placeholder.setVisibility(View.GONE);
                 goalDescription.setText(goalModel.getActiveGoal().getValue().getDescription());
                 refreshScreen();
             }
@@ -89,31 +105,6 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
         startActivityForResult(intent, TASK_MOD_CODE);
     }
 
-    private void refreshScreen() {
-        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        GoalView goalView = new GoalView();
-        ft.replace(R.id.goal_slider,goalView);
-        ft.commit();
-    }
-
-    public void refreshToNext(View view){
-        int tempIndex = goalModel.getActiveGoalIndex();
-        if (goalModel.getGoalCount() > ++tempIndex) {
-        goalModel.setActiveGoal(tempIndex);
-        goalModel.setActiveGoalIndex(tempIndex);
-        refreshScreen();
-        }
-    }
-
-    public void refreshToPrevious(View view){
-        int tempIndex = goalModel.getActiveGoalIndex();
-        if (0 <= --tempIndex ) {
-            goalModel.setActiveGoal(tempIndex);
-            goalModel.setActiveGoalIndex(tempIndex);
-            refreshScreen();
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -124,16 +115,14 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
             tempList.add(buildNewTask(data));
             goalModel.setActiveTasks(tempList);
         }
-        if (resultCode == 5) {
+        //else if (resultCode == 2) { goals.get(0).getCurrentGoalView().modifyTask(data); }
+
+        else if (resultCode == 5) {
             Goal newGoal = new Goal();
             newGoal.setDescription(data.getStringExtra("GOAL_DESCRIPTION"));
             goalModel.addNewGoal(newGoal);
             goalModel.setActiveGoal(newGoal);
         }
-
-        //if (resultCode == 0) { goalView.addActiveTask(buildNewTask(data)); }
-        //else if (resultCode == 2) { goals.get(0).getCurrentGoalView().modifyTask(data); }
-        //else if (resultCode == 99) { goals.get(0).getCurrentGoalView().deleteTask(data); }`
     }
 
     public Task buildNewTask(Intent data) {
@@ -148,5 +137,28 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
     }
 
 
+    private void refreshScreen() {
+        FragmentTransaction ft = getParentFragmentManager().beginTransaction();
+        GoalView goalView = new GoalView();
+        ft.replace(R.id.goal_slider,goalView);
+        ft.commit();
+    }
 
+    private void refreshToNext() {
+        int tempIndex = goalModel.getActiveGoalIndex();
+        if (goalModel.getGoalCount() > ++tempIndex) {
+            goalModel.setActiveGoal(tempIndex);
+            goalModel.setActiveGoalIndex(tempIndex);
+            refreshScreen();
+        }
+    }
+
+    public void refreshToPrevious() {
+        int tempIndex = goalModel.getActiveGoalIndex();
+        if (0 <= --tempIndex) {
+            goalModel.setActiveGoal(tempIndex);
+            goalModel.setActiveGoalIndex(tempIndex);
+            refreshScreen();
+        }
+    }
 }

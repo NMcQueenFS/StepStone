@@ -1,4 +1,4 @@
-package mcqueen.noah.stepstone;
+package mcqueen.noah.stepstone.primitives;
 
 import java.util.ArrayList;
 import java.util.Date;

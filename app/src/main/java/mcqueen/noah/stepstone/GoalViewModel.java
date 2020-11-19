@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcqueen.noah.stepstone.primitives.Goal;
+import mcqueen.noah.stepstone.primitives.Task;
+
 public class GoalViewModel extends ViewModel {
     private MutableLiveData<List<Goal>> availableGoals;
     private MutableLiveData<Goal> activeGoal;

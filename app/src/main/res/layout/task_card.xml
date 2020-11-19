@@ -71,13 +71,13 @@
                 android:id="@+id/taskCard_childCount_Display"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/baseline_fact_check_black_18dp"
                 android:paddingVertical="4dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/completedCard_description"
-                tools:text="child count display" />
+                tools:text="child count display"
+                app:drawableTopCompat="@drawable/baseline_fact_check_black_18dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

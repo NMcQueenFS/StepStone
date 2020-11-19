@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import mcqueen.noah.stepstone.primitives.Task;
+
 public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdapter.TaskViewHolder> {
     final public List<Task> tasks;
 

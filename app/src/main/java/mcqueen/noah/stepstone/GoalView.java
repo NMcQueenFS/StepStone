@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import mcqueen.noah.stepstone.primitives.Task;
+
 public class GoalView extends Fragment{
 
     private int sortMethod;
