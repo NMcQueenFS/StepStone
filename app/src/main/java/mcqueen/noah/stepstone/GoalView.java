@@ -24,8 +24,7 @@ public class GoalView extends Fragment{
     private TaskViewAdapter activeTaskAdapter;
     private GoalViewModel goalModel;
 
-    GoalView(){
-    }
+    GoalView(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

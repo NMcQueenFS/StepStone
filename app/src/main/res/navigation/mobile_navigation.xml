@@ -12,9 +12,9 @@
 
     <fragment
         android:id="@+id/navigation_upcoming"
-        android:name="mcqueen.noah.stepstone.ui.dashboard.DashboardFragment"
+        android:name="mcqueen.noah.stepstone.UpcomingManager"
         android:label="@string/title_upcoming"
-        tools:layout="@layout/fragment_upcoming" />
+        tools:layout="@layout/upcoming_display" />
 
     <fragment
         android:id="@+id/navigation_settings"

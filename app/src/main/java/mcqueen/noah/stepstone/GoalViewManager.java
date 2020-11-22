@@ -44,10 +44,10 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
         goalDescription = view.findViewById(R.id.goal_description_textView);
         goalDescription.setOnTouchListener(new OnSwipeTouchListener(getContext()) {
             public void onSwipeLeft() {
-                refreshToNext();
+                refreshToPrevious();
             }
             public void onSwipeRight() {
-                refreshToPrevious();
+                refreshToNext();
             }
         });
 

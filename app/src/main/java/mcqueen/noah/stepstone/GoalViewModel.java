@@ -36,6 +36,11 @@ public class GoalViewModel extends ViewModel {
             return activeGoal;
     }
 
+    public LiveData<List<Goal>> getAllGoals() {
+        if (availableGoals == null) availableGoals = new MutableLiveData<>();
+        return availableGoals;
+    }
+
     public void setActiveGoal(Goal goal) { activeGoal.setValue(goal); }
     public void setActiveGoal(int index) { activeGoal.setValue(availableGoals.getValue().get(index));}
 
