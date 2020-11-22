@@ -5,14 +5,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
@@ -39,6 +37,7 @@ public class GoalViewManager extends Fragment implements PopupMenu.OnMenuItemCli
         return inflater.inflate(R.layout.goal_slider,container,false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         goalDescription = view.findViewById(R.id.goal_description_textView);

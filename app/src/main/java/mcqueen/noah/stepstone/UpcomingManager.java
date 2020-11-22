@@ -4,21 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import mcqueen.noah.stepstone.primitives.Goal;
@@ -74,8 +67,11 @@ public class UpcomingManager extends Fragment {
                 }
             }
 
-            for (int i = 0; i < upcomingDateList.size(); i++) { upcomingAdapter.addTask(new Task(urgentList.get(i).getDescription(),urgentList.get(i).getDueDate(),urgentList.get(i).getPriority())); }
+            for (int i = 0; i < upcomingDateList.size(); i++) { upcomingAdapter.addTask(new Task(upcomingDateList.get(i).getDescription(),upcomingDateList.get(i).getDueDate(),upcomingDateList.get(i).getPriority())); }
             for (int i = 0; i < urgentList.size(); i++) { criticalAdapter.addTask(new Task(urgentList.get(i).getDescription(),urgentList.get(i).getDueDate(),urgentList.get(i).getPriority())); }
+
+            urgentList.clear();
+            upcomingDateList.clear();
         }
     }
 }

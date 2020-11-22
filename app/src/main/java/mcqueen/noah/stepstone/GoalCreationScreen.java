@@ -18,7 +18,7 @@ public class GoalCreationScreen extends AppCompatActivity {
     }
 
     //Called if Add Task/Accept Changes button is pushed
-    public void sendData(View view) {
+    public void sendData(@SuppressWarnings({"unused", "RedundantSuppression"}) View view) {
         String description = goalDescription.getText().toString();
 
         Intent intent = new Intent();

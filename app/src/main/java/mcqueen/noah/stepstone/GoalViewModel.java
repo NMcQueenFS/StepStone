@@ -14,7 +14,7 @@ public class GoalViewModel extends ViewModel {
     private MutableLiveData<List<Goal>> availableGoals;
     private MutableLiveData<Goal> activeGoal;
     private MutableLiveData<Integer> activeGoalIndex;
-    private MutableLiveData<List<Task>> activeTasks, completedTasks;
+    private MutableLiveData<List<Task>> activeTasks; //, completedTasks;
 
     public void addNewGoal(Goal goal){
         List<Goal> tempList;
